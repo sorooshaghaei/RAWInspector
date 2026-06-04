@@ -4,6 +4,22 @@ RAW Inspector is a small SwiftUI app for checking camera RAW metadata on iPhone,
 
 It can read useful camera information from RAW files and, when available, show shutter/image count data. Fujifilm RAF files are the main supported path for shutter count.
 
+## Product samples
+
+<p align="center">
+  <img src="RAFShutterCount/Assets.xcassets/sample/3.PNG" alt="RAW Inspector desktop inspect screen" width="100%">
+</p>
+
+<p align="center">
+  <img src="RAFShutterCount/Assets.xcassets/sample/4.PNG" alt="RAW Inspector desktop inspection results" width="49%">
+  <img src="RAFShutterCount/Assets.xcassets/sample/5.PNG" alt="RAW Inspector desktop guide" width="49%">
+</p>
+
+<p align="center">
+  <img src="RAFShutterCount/Assets.xcassets/sample/1.PNG" alt="RAW Inspector mobile inspect screen" width="32%">
+  <img src="RAFShutterCount/Assets.xcassets/sample/2.PNG" alt="RAW Inspector mobile inspection results" width="32%">
+</p>
+
 ## Features
 
 - Open RAW files from Files
