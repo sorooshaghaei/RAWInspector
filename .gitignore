@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+
+# Xcode user/private files
+*.xcuserstate
+*.xcuserdatad/
+xcuserdata/
+
+# Xcode build output
+build/
+DerivedData/
+
+# SwiftPM/build cache
+.swiftpm/
+.build/
+
+# Archives
+*.xcarchive
+
+# Logs
+*.log

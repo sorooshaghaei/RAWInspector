@@ -1,0 +1,3 @@
+"CFBundleDisplayName" = "RAW Inspector";
+"CFBundleName" = "RAW Inspector";
+"NSPhotoLibraryUsageDescription" = "Выберите фото или RAW-файлы для локальной проверки метаданных. Файлы остаются на этом устройстве.";
