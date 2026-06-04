@@ -30,38 +30,38 @@ struct CameraInspectionResult: Identifiable, Equatable {
         case let (.none, .some(model)):
             return model
         default:
-            return "Unknown camera"
+            return L10n.tr("common.unknown_camera")
         }
     }
 
     var lensDescription: String {
-        Self.cleaned(lensModel) ?? "Unknown / not stored"
+        Self.cleaned(lensModel) ?? L10n.tr("common.unknown_not_stored")
     }
 
     var firmwareDescription: String {
-        Self.cleaned(firmware) ?? "Unknown / not stored"
+        Self.cleaned(firmware) ?? L10n.tr("common.unknown_not_stored")
     }
 
     var serialDescription: String {
-        Self.cleaned(serialNumber) ?? "Unknown / not stored"
+        Self.cleaned(serialNumber) ?? L10n.tr("common.unknown_not_stored")
     }
 
     var dateDescription: String {
-        Self.cleaned(captureDate) ?? "Unknown / not stored"
+        Self.cleaned(captureDate) ?? L10n.tr("common.unknown_not_stored")
     }
 
     var shutterCountDescription: String {
         if let shutterCount { return "\(shutterCount)" }
-        return "Unavailable"
+        return L10n.tr("common.unavailable")
     }
 
     var countLevelLabel: String {
-        guard let shutterCount else { return "No count" }
+        guard let shutterCount else { return L10n.tr("count.no_count") }
         switch shutterCount {
-        case 0...20: return "Very low"
-        case 21...100: return "Low"
-        case 101...999: return "Used"
-        default: return "High"
+        case 0...20: return L10n.tr("count.very_low")
+        case 21...100: return L10n.tr("count.low")
+        case 101...999: return L10n.tr("count.used")
+        default: return L10n.tr("count.high")
         }
     }
 
@@ -69,57 +69,57 @@ struct CameraInspectionResult: Identifiable, Equatable {
         guard let shutterCount else {
             switch rawBrand {
             case .canon, .sony:
-                return "This file contains camera metadata, but this brand often does not expose a reliable shutter count in normal RAW EXIF data. Use the metadata fields as a condition report, not as shutter-count proof."
+                return L10n.tr("verdict.no_count_canon_sony")
             case .nikon:
-                return "Nikon shutter count was not found in this file. Some Nikon files expose it in MakerNote data, but not every file or model stores it in a readable way."
+                return L10n.tr("verdict.no_count_nikon")
             case .fujifilm:
-                return "Fujifilm Image Count was not found. Use an untouched RAF copied directly from the SD card."
+                return L10n.tr("verdict.no_count_fuji")
             case .unknown:
-                return "This file type or camera brand is not fully supported for shutter-count extraction."
+                return L10n.tr("verdict.no_count_unknown")
             }
         }
 
         switch shutterCount {
         case 0...20:
-            return "Very low count. This is normal for a new or almost-new camera, especially after factory testing and first setup."
+            return L10n.tr("verdict.very_low")
         case 21...100:
-            return "Low count. Still possible after factory or shop testing, but check the seller claim and packaging condition."
+            return L10n.tr("verdict.low")
         case 101...999:
-            return "Not a high professional count, but suspicious if the camera was sold as brand new and never used."
+            return L10n.tr("verdict.used")
         default:
-            return "High for a camera sold as brand new. Ask the seller for an explanation before accepting the purchase."
+            return L10n.tr("verdict.high")
         }
     }
 
     var reportText: String {
         var lines: [String] = []
-        lines.append("Camera RAW Inspection Report")
-        lines.append("Generated locally on device")
+        lines.append(L10n.tr("report.title"))
+        lines.append(L10n.tr("report.created_on_device"))
         lines.append("")
-        lines.append("File: \(fileName)")
-        lines.append("File type: \(fileExtension.uppercased())")
-        lines.append("File size: \(Self.formattedFileSize(fileSizeBytes))")
-        lines.append("File verification: \(fileTypeStatus)")
-        lines.append("Metadata status: \(metadataStatus)")
+        lines.append(L10n.tr("report.file", fileName))
+        lines.append(L10n.tr("report.file_type", fileExtension.uppercased()))
+        lines.append(L10n.tr("report.file_size", Self.formattedFileSize(fileSizeBytes)))
+        lines.append(L10n.tr("report.file_verification", fileTypeStatus))
+        lines.append(L10n.tr("report.metadata_status", metadataStatus))
         lines.append("")
-        lines.append("Camera model: \(cameraDescription)")
-        lines.append("Brand: \(rawBrand.displayName)")
-        lines.append("Serial number: \(serialDescription)")
-        lines.append("Firmware/software: \(firmwareDescription)")
-        lines.append("Lens used: \(lensDescription)")
-        lines.append("Capture date: \(dateDescription)")
+        lines.append(L10n.tr("report.camera_model", cameraDescription))
+        lines.append(L10n.tr("report.brand", rawBrand.displayName))
+        lines.append(L10n.tr("report.serial_number", serialDescription))
+        lines.append(L10n.tr("report.firmware", firmwareDescription))
+        lines.append(L10n.tr("report.lens", lensDescription))
+        lines.append(L10n.tr("report.capture_date", dateDescription))
         lines.append("")
-        lines.append("Shutter / image count: \(shutterCountDescription)")
-        lines.append("Count source: \(shutterCountSource ?? "Not available")")
-        lines.append("Interpretation: \(verdict)")
+        lines.append(L10n.tr("report.shutter_count", shutterCountDescription))
+        lines.append(L10n.tr("report.count_source", shutterCountSource ?? L10n.tr("common.not_available")))
+        lines.append(L10n.tr("report.interpretation", verdict))
         if !warnings.isEmpty {
             lines.append("")
-            lines.append("Warnings:")
+            lines.append(L10n.tr("warning.title"))
             warnings.forEach { lines.append("- \($0)") }
         }
         lines.append("")
-        lines.append("Privacy: processed locally. No upload, no analytics, no advertising.")
-        lines.append("Legal: © 2026 Soroosh AGHAEI. All rights reserved. Independent utility; not affiliated with camera manufacturers.")
+        lines.append(L10n.tr("privacy.local_short"))
+        lines.append(L10n.tr("legal.report"))
         return lines.joined(separator: "\n")
     }
 
@@ -152,7 +152,7 @@ enum CameraBrand: String, Equatable {
         case .nikon: return "Nikon"
         case .canon: return "Canon"
         case .sony: return "Sony"
-        case .unknown: return "Unknown / unsupported"
+        case .unknown: return L10n.tr("brand.unknown")
         }
     }
 }
@@ -164,9 +164,9 @@ enum RawMetadataInspectorError: LocalizedError, Equatable {
     var errorDescription: String? {
         switch self {
         case .emptyFile:
-            return "The selected file is empty."
+            return L10n.tr("error.empty_file")
         case .fileReadFailed:
-            return "The selected file could not be read."
+            return L10n.tr("error.file_read_failed")
         }
     }
 }
@@ -212,9 +212,9 @@ final class RawMetadataInspector {
                 captureDate: nil,
                 shutterCount: nil,
                 shutterCountSource: nil,
-                fileTypeStatus: "Empty file",
-                metadataStatus: "No metadata",
-                warnings: ["The file is empty."],
+                fileTypeStatus: L10n.tr("status.empty_file"),
+                metadataStatus: L10n.tr("status.no_metadata"),
+                warnings: [L10n.tr("warning.empty_file")],
                 rawBrand: .unknown
             )
         }
@@ -223,21 +223,21 @@ final class RawMetadataInspector {
         let extensionSupported = supportedExtensions.contains(fileExtension)
         let fileTypeStatus: String
         if extensionSupported {
-            fileTypeStatus = "Recognized RAW extension (.\(fileExtension.uppercased()))"
+            fileTypeStatus = L10n.tr("status.recognized_raw", fileExtension.uppercased())
         } else {
-            fileTypeStatus = "Unsupported or non-RAW extension (.\(fileExtension.uppercased()))"
-            warnings.append("Use original RAW files. JPEG, PNG, HEIC, screenshots, and exported previews cannot be trusted for shutter-count checks.")
+            fileTypeStatus = L10n.tr("status.unsupported_extension", fileExtension.uppercased())
+            warnings.append(L10n.tr("warning.original_raw_only"))
         }
 
         if data.count < 5_000_000 && extensionSupported {
-            warnings.append("This file is unusually small for a RAW file. It may be a preview, converted file, or incomplete copy.")
+            warnings.append(L10n.tr("warning.small_raw"))
         }
 
         guard let context = findTIFFContext(bytes) else {
             if fileExtension == "cr3" {
-                warnings.append("CR3 support is limited. Some CR3 files keep EXIF in an ISO container that this lightweight parser may not fully decode.")
+                warnings.append(L10n.tr("warning.cr3_limited"))
             } else {
-                warnings.append("No readable TIFF/EXIF metadata block was found.")
+                warnings.append(L10n.tr("warning.no_tiff_exif"))
             }
             return CameraInspectionResult(
                 fileName: fileName,
@@ -252,7 +252,7 @@ final class RawMetadataInspector {
                 shutterCount: nil,
                 shutterCountSource: nil,
                 fileTypeStatus: fileTypeStatus,
-                metadataStatus: "No readable EXIF/TIFF metadata",
+                metadataStatus: L10n.tr("status.no_exif_tiff"),
                 warnings: warnings,
                 rawBrand: headerBrand
             )
@@ -285,14 +285,14 @@ final class RawMetadataInspector {
                 makerNoteLength = Int(makerNoteEntry.count)
             }
         } else {
-            warnings.append("The EXIF IFD pointer was not found. Some camera details may be missing.")
+            warnings.append(L10n.tr("warning.exif_pointer_missing"))
         }
 
         if let makeValue = CameraInspectionResult.cleaned(make), makeValue.localizedCaseInsensitiveContains("FUJIFILM") {
             make = "FUJIFILM"
         }
         if let software = CameraInspectionResult.cleaned(firmware), looksEditedSoftware(software) {
-            warnings.append("The software field mentions an editing/conversion application. Prefer a RAW copied directly from the SD card.")
+            warnings.append(L10n.tr("warning.edited_software"))
         }
 
         let brand = inferBrand(make: make, fileExtension: fileExtension, headerBrand: headerBrand)
@@ -304,29 +304,29 @@ final class RawMetadataInspector {
             case .fujifilm:
                 if let count = parseFujifilmImageCount(bytes, makerNoteStart: makerNoteStart, makerNoteLength: makerNoteLength) {
                     shutterCount = count
-                    shutterSource = "Fujifilm MakerNote tag 0x1438 / ImageCount"
+                    shutterSource = L10n.tr("source.fujifilm_image_count")
                 } else {
-                    warnings.append("Fujifilm MakerNote was present, but Image Count tag 0x1438 was not found.")
+                    warnings.append(L10n.tr("warning.fuji_count_missing"))
                 }
             case .nikon:
                 if let count = parseNikonShutterCount(bytes, makerNoteStart: makerNoteStart, makerNoteLength: makerNoteLength) {
                     shutterCount = count
-                    shutterSource = "Nikon MakerNote tag 0x00A7 / Shutter Count"
+                    shutterSource = L10n.tr("source.nikon_shutter_count")
                 } else {
-                    warnings.append("Nikon MakerNote was present, but a readable shutter-count value was not found.")
+                    warnings.append(L10n.tr("warning.nikon_count_missing"))
                 }
             case .canon:
-                warnings.append("Canon shutter count is not reliably stored in normal RAW EXIF/MakerNote data for many models. Metadata report is available, but shutter count may require model-specific service data.")
+                warnings.append(L10n.tr("warning.canon_count_unavailable"))
             case .sony:
-                warnings.append("Sony shutter count is not exposed consistently in ordinary RAW metadata. Metadata report is available, but shutter count may be unavailable for many ARW files.")
+                warnings.append(L10n.tr("warning.sony_count_unavailable"))
             case .unknown:
-                warnings.append("Camera brand is not fully supported for shutter-count extraction.")
+                warnings.append(L10n.tr("warning.brand_unsupported"))
             }
         } else {
-            warnings.append("MakerNote data was not found. Shutter count usually requires original MakerNote metadata.")
+            warnings.append(L10n.tr("warning.makernote_missing"))
         }
 
-        let metadataStatus = makerNoteStart == nil ? "EXIF found; MakerNote missing" : "EXIF and MakerNote found"
+        let metadataStatus = makerNoteStart == nil ? L10n.tr("status.exif_makernote_missing") : L10n.tr("status.exif_makernote_found")
 
         return CameraInspectionResult(
             fileName: fileName,

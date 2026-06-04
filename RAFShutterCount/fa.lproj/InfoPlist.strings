@@ -1,0 +1,3 @@
+"CFBundleDisplayName" = "RAW Inspector";
+"CFBundleName" = "RAW Inspector";
+"NSPhotoLibraryUsageDescription" = "برای بررسی متادیتا روی دستگاه، عکس یا فایل RAW انتخاب کنید. فایل‌ها روی همین دستگاه می‌مانند.";

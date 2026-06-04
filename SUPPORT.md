@@ -1,45 +1,27 @@
 # Support
 
-## App
+RAW Inspector is designed for checking original camera RAW files.
 
-RAW Inspector
+For best results, use RAW files copied directly from the camera SD card or camera storage.
 
-## Support scope
+Good files:
 
-Use this page for:
+- Original RAF, NEF, NRW, CR2, CR3, or ARW files
+- Files copied directly from the camera card
+- Files opened from the Files app
 
-- Problems opening RAW files
-- Missing shutter count results
-- Metadata warnings
-- PDF or PNG report export issues
-- App Store support questions
+Files that may not work well:
 
-## Before contacting support
+- JPEG, PNG, HEIC, or screen captures
+- Lightroom or Photoshop exports
+- WhatsApp, Instagram, or compressed previews
+- Files with stripped MakerNote metadata
 
-Check that the file is an original RAW copied directly from the camera SD card or camera storage.
+Current support:
 
-Do not use:
-
-- JPEG files
-- Screenshots
-- Lightroom exports
-- Photoshop exports
-- iPhone Photos conversions
-- WhatsApp files
-- Instagram files
-- Compressed previews
-
-## Current brand support
-
-- Fujifilm RAF: primary support for Image Count.
-- Nikon NEF/NRW: best-effort shutter count when the value is stored in readable MakerNote data.
-- Canon CR2/CR3: metadata inspection; shutter count often unavailable.
-- Sony ARW/SR2/SRF: metadata inspection; shutter count often unavailable.
-
-## Contact
-
-Add your public support email or website URL here before App Store submission.
-
-## Legal
+- Fujifilm RAF: primary Image Count support
+- Nikon NEF / NRW: best-effort shutter count when readable MakerNote data is present
+- Canon CR2 / CR3: metadata inspection; shutter count may be unavailable
+- Sony ARW: metadata inspection; shutter count may be unavailable
 
 © 2026 Soroosh AGHAEI. All rights reserved.

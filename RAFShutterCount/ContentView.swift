@@ -1,7 +1,19 @@
+import Foundation
 import SwiftUI
 import UniformTypeIdentifiers
 import UIKit
 import PhotosUI
+
+
+enum L10n {
+    static func tr(_ key: String) -> String {
+        NSLocalizedString(key, comment: "")
+    }
+
+    static func tr(_ key: String, _ args: CVarArg...) -> String {
+        String(format: NSLocalizedString(key, comment: ""), locale: Locale.current, arguments: args)
+    }
+}
 
 private extension UTType {
     static var cameraRawAny: UTType { UTType("public.camera-raw-image") ?? .data }
@@ -16,13 +28,13 @@ struct RootView: View {
     var body: some View {
         TabView {
             InspectorView()
-                .tabItem { Label("Inspect", systemImage: "camera.viewfinder") }
+                .tabItem { Label(L10n.tr("tab.inspect"), systemImage: "camera.viewfinder") }
 
             GuideView()
-                .tabItem { Label("Guide", systemImage: "questionmark.circle") }
+                .tabItem { Label(L10n.tr("tab.guide"), systemImage: "questionmark.circle") }
 
             AboutView()
-                .tabItem { Label("About", systemImage: "info.circle") }
+                .tabItem { Label(L10n.tr("tab.about"), systemImage: "info.circle") }
         }
     }
 }
@@ -76,7 +88,7 @@ struct InspectorView: View {
                         SummaryCard(results: results)
 
                         VStack(alignment: .leading, spacing: 12) {
-                            Text("Inspection Results")
+                            Text(L10n.tr("result.inspection_results"))
                                 .font(.title3.weight(.semibold))
                             ForEach(results) { result in
                                 ResultCard(result: result, copied: copiedID == result.id) {
@@ -93,7 +105,7 @@ struct InspectorView: View {
                 .padding()
                 .frame(maxWidth: .infinity)
             }
-            .navigationTitle("RAW Inspector")
+            .navigationTitle(L10n.tr("app.title"))
             .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $isPhotoImporting) {
                 PhotoLibraryPicker { items in
@@ -175,12 +187,12 @@ struct InspectorView: View {
                     lock.lock()
                     inspected.append(result)
                     if loaded.wasFallbackPreview {
-                        failures.append("\(loaded.fileName): Photos provided an image preview/converted representation. For reliable shutter count, use the original RAW file from Files if metadata is missing.")
+                        failures.append(L10n.tr("photos.preview_warning", loaded.fileName))
                     }
                     lock.unlock()
                 case .failure(let error):
                     lock.lock()
-                    failures.append("Photo \(index + 1): \(error.localizedDescription)")
+                    failures.append(L10n.tr("photos.error", index + 1, error.localizedDescription))
                     lock.unlock()
                 }
             }
@@ -293,9 +305,9 @@ private struct HeaderCard: View {
                     .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Camera RAW Inspection")
+                    Text(L10n.tr("header.title"))
                         .font(.title2.weight(.bold))
-                    Text("Choose from Photos or Files, check Fujifilm RAF image count, read camera metadata, inspect multiple RAW files, and export a seller/buyer report. Files stay local on this device.")
+                    Text(L10n.tr("header.subtitle"))
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -318,7 +330,7 @@ private struct ActionPanel: View {
         VStack(alignment: .leading, spacing: 12) {
             VStack(spacing: 10) {
                 Button(action: onChoosePhotos) {
-                    Label(isReading ? "Reading Photos…" : "Choose from Photos", systemImage: "photo.on.rectangle")
+                    Label(isReading ? L10n.tr("status.reading_photos") : L10n.tr("button.choose_photos"), systemImage: "photo.on.rectangle")
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 6)
@@ -326,10 +338,10 @@ private struct ActionPanel: View {
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
                 .disabled(isReading)
-                .accessibilityHint("Choose images or RAW files from the Photos library. If Photos provides only a preview, use Files for the original RAW file.")
+                .accessibilityHint(L10n.tr("hint.choose_photos"))
 
                 Button(action: onChooseFiles) {
-                    Label("Choose from Files", systemImage: "folder")
+                    Label(L10n.tr("button.choose_files"), systemImage: "folder")
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 6)
@@ -337,10 +349,10 @@ private struct ActionPanel: View {
                 .buttonStyle(.bordered)
                 .controlSize(.large)
                 .disabled(isReading)
-                .accessibilityHint("Choose one or more original RAW files from the Files app. This is the most reliable method.")
+                .accessibilityHint(L10n.tr("hint.choose_files"))
             }
 
-            Text("Photos is easier. Files is more reliable for untouched RAW files and shutter count metadata.")
+            Text(L10n.tr("hint.photos_files"))
                 .font(.footnote)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
@@ -348,14 +360,14 @@ private struct ActionPanel: View {
             if hasResults {
                 ViewThatFits(in: .horizontal) {
                     HStack(spacing: 10) {
-                        Button(action: onPDF) { Label("Export PDF", systemImage: "doc.richtext") }
-                        Button(action: onPNG) { Label("Export PNG", systemImage: "photo") }
-                        Button(role: .destructive, action: onClear) { Label("Clear", systemImage: "trash") }
+                        Button(action: onPDF) { Label(L10n.tr("button.export_pdf"), systemImage: "doc.richtext") }
+                        Button(action: onPNG) { Label(L10n.tr("button.export_png"), systemImage: "photo") }
+                        Button(role: .destructive, action: onClear) { Label(L10n.tr("button.clear"), systemImage: "trash") }
                     }
                     VStack(alignment: .leading, spacing: 10) {
-                        Button(action: onPDF) { Label("Export PDF Report", systemImage: "doc.richtext") }
-                        Button(action: onPNG) { Label("Export PNG Report", systemImage: "photo") }
-                        Button(role: .destructive, action: onClear) { Label("Clear Results", systemImage: "trash") }
+                        Button(action: onPDF) { Label(L10n.tr("button.export_pdf_report"), systemImage: "doc.richtext") }
+                        Button(action: onPNG) { Label(L10n.tr("button.export_png_report"), systemImage: "photo") }
+                        Button(role: .destructive, action: onClear) { Label(L10n.tr("button.clear_results"), systemImage: "trash") }
                     }
                 }
                 .buttonStyle(.bordered)
@@ -370,7 +382,7 @@ private struct ReadingCard: View {
     var body: some View {
         HStack(spacing: 12) {
             ProgressView()
-            Text("Reading RAW metadata locally…")
+            Text(L10n.tr("status.reading"))
                 .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -386,18 +398,18 @@ private struct SummaryCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Batch Summary")
+            Text(L10n.tr("summary.title"))
                 .font(.headline)
             ViewThatFits(in: .horizontal) {
                 HStack(spacing: 12) {
-                    StatBox(title: "Files", value: "\(results.count)")
-                    StatBox(title: "Counts found", value: "\(readableCounts)")
-                    StatBox(title: "Warnings", value: "\(warnings)")
+                    StatBox(title: L10n.tr("summary.files"), value: "\(results.count)")
+                    StatBox(title: L10n.tr("summary.counts_found"), value: "\(readableCounts)")
+                    StatBox(title: L10n.tr("summary.warnings"), value: "\(warnings)")
                 }
                 VStack(spacing: 12) {
-                    StatBox(title: "Files", value: "\(results.count)")
-                    StatBox(title: "Counts found", value: "\(readableCounts)")
-                    StatBox(title: "Warnings", value: "\(warnings)")
+                    StatBox(title: L10n.tr("summary.files"), value: "\(results.count)")
+                    StatBox(title: L10n.tr("summary.counts_found"), value: "\(readableCounts)")
+                    StatBox(title: L10n.tr("summary.warnings"), value: "\(warnings)")
                 }
             }
         }
@@ -453,7 +465,7 @@ private struct ResultCard: View {
 
             HStack(alignment: .firstTextBaseline, spacing: 18) {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Shutter / Image Count")
+                    Text(L10n.tr("result.shutter_count"))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                     Text(result.shutterCountDescription)
@@ -468,24 +480,26 @@ private struct ResultCard: View {
                 .font(.callout)
                 .fixedSize(horizontal: false, vertical: true)
 
-            DisclosureGroup("Metadata", isExpanded: $showDetails) {
+            DisclosureGroup(isExpanded: $showDetails) {
                 VStack(spacing: 10) {
-                    InfoRow(label: "Camera model", value: result.cameraDescription)
-                    InfoRow(label: "Serial number", value: result.serialDescription)
-                    InfoRow(label: "Firmware/software", value: result.firmwareDescription)
-                    InfoRow(label: "Lens used", value: result.lensDescription)
-                    InfoRow(label: "Capture date", value: result.dateDescription)
-                    InfoRow(label: "File size", value: CameraInspectionResult.formattedFileSize(result.fileSizeBytes))
-                    InfoRow(label: "File verification", value: result.fileTypeStatus)
-                    InfoRow(label: "Metadata status", value: result.metadataStatus)
-                    InfoRow(label: "Count source", value: result.shutterCountSource ?? "Not available")
+                    InfoRow(label: L10n.tr("result.camera_model"), value: result.cameraDescription)
+                    InfoRow(label: L10n.tr("result.serial_number"), value: result.serialDescription)
+                    InfoRow(label: L10n.tr("result.firmware"), value: result.firmwareDescription)
+                    InfoRow(label: L10n.tr("result.lens"), value: result.lensDescription)
+                    InfoRow(label: L10n.tr("result.capture_date"), value: result.dateDescription)
+                    InfoRow(label: L10n.tr("result.file_size"), value: CameraInspectionResult.formattedFileSize(result.fileSizeBytes))
+                    InfoRow(label: L10n.tr("result.file_verification"), value: result.fileTypeStatus)
+                    InfoRow(label: L10n.tr("result.metadata_status"), value: result.metadataStatus)
+                    InfoRow(label: L10n.tr("result.count_source"), value: result.shutterCountSource ?? L10n.tr("common.not_available"))
                 }
                 .padding(.top, 8)
+            } label: {
+                Text(L10n.tr("result.metadata"))
             }
 
             if !result.warnings.isEmpty {
                 VStack(alignment: .leading, spacing: 8) {
-                    Label("Warnings", systemImage: "exclamationmark.triangle")
+                    Label(L10n.tr("warning.title"), systemImage: "exclamationmark.triangle")
                         .font(.subheadline.weight(.semibold))
                     ForEach(result.warnings, id: \.self) { warning in
                         Text("• \(warning)")
@@ -500,7 +514,7 @@ private struct ResultCard: View {
             }
 
             Button(action: onCopy) {
-                Label(copied ? "Copied Report Text" : "Copy Report Text", systemImage: copied ? "checkmark" : "doc.on.doc")
+                Label(copied ? L10n.tr("result.copied_report") : L10n.tr("result.copy_report"), systemImage: copied ? "checkmark" : "doc.on.doc")
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.bordered)
@@ -514,11 +528,11 @@ private struct ErrorCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Label("Import problem", systemImage: "exclamationmark.triangle")
+            Label(L10n.tr("error.import_problem"), systemImage: "exclamationmark.triangle")
                 .font(.headline)
             Text(message)
                 .fixedSize(horizontal: false, vertical: true)
-            Text("Use original RAW files copied directly from the SD card or camera storage. Photos import is convenient, but if Photos provides only a preview, use Files. Avoid Lightroom exports, WhatsApp, Instagram, screenshots, and compressed previews.")
+            Text(L10n.tr("error.import_help"))
                 .font(.footnote)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
@@ -530,13 +544,13 @@ private struct ErrorCard: View {
 private struct LimitsCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Important limits")
+            Text(L10n.tr("limits.title"))
                 .font(.headline)
-            Text("Shutter count is brand-specific. Fujifilm RAF Image Count is read from MakerNote tag 0x1438. Nikon support is best-effort where MakerNote tag 0x00A7 is present. Canon and Sony files often do not expose a reliable count in ordinary RAW metadata, so the app still generates a metadata report but may show the count as unavailable.")
+            Text(L10n.tr("limits.brand_specific"))
                 .font(.footnote)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
-            Text("The number is useful for buying and selling checks, but it is not absolute forensic proof. Firmware changes, service events, and stripped metadata can affect stored values.")
+            Text(L10n.tr("limits.not_proof"))
                 .font(.footnote)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
@@ -550,41 +564,41 @@ struct GuideView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
-                    GuideSection(title: "How to use", rows: [
-                        "Choose from Photos for convenience, or choose from Files for the most reliable original RAW file access.",
-                        "For Fujifilm, use untouched .RAF files copied directly from the SD card when possible.",
-                        "For Nikon, Canon, and Sony, the app reads available camera metadata and tries shutter-count extraction where the file exposes it.",
-                        "Export a PDF or PNG report when buying or selling a camera."
+                    GuideSection(title: L10n.tr("guide.how_to_use"), rows: [
+                        L10n.tr("guide.how_to_use.1"),
+                        L10n.tr("guide.how_to_use.2"),
+                        L10n.tr("guide.how_to_use.3"),
+                        L10n.tr("guide.how_to_use.4")
                     ])
 
-                    GuideSection(title: "Report fields", rows: [
-                        "Camera model and brand",
-                        "Shutter/image count when available",
-                        "Firmware/software field",
-                        "Lens used when stored in EXIF",
-                        "Serial number when stored in EXIF",
-                        "File type verification and metadata warnings",
-                        "Local-only processing note"
+                    GuideSection(title: L10n.tr("guide.report_fields"), rows: [
+                        L10n.tr("guide.report_fields.1"),
+                        L10n.tr("guide.report_fields.2"),
+                        L10n.tr("guide.report_fields.3"),
+                        L10n.tr("guide.report_fields.4"),
+                        L10n.tr("guide.report_fields.5"),
+                        L10n.tr("guide.report_fields.6"),
+                        L10n.tr("guide.report_fields.7")
                     ])
 
-                    GuideSection(title: "Good files", rows: [
-                        "DSCF0002.RAF copied from SD card",
-                        "Original .NEF, .CR2, .CR3, or .ARW copied as a file",
-                        "Files opened from the Files app, not from Photos previews",
-                        "RAW files stored in Photos, when Photos provides the original asset representation"
+                    GuideSection(title: L10n.tr("guide.good_files"), rows: [
+                        L10n.tr("guide.good_files.1"),
+                        L10n.tr("guide.good_files.2"),
+                        L10n.tr("guide.good_files.3"),
+                        L10n.tr("guide.good_files.4")
                     ])
 
-                    GuideSection(title: "Bad files", rows: [
-                        "JPEG, PNG, HEIC, screenshots, Instagram, WhatsApp, or compressed previews",
-                        "Lightroom or Photoshop exports",
-                        "Files where MakerNote metadata was stripped"
+                    GuideSection(title: L10n.tr("guide.bad_files"), rows: [
+                        L10n.tr("guide.bad_files.1"),
+                        L10n.tr("guide.bad_files.2"),
+                        L10n.tr("guide.bad_files.3")
                     ])
                 }
                 .frame(maxWidth: 920, alignment: .center)
                 .padding()
                 .frame(maxWidth: .infinity)
             }
-            .navigationTitle("Guide")
+            .navigationTitle(L10n.tr("guide.title"))
             .navigationBarTitleDisplayMode(.inline)
         }
     }
@@ -619,37 +633,37 @@ struct AboutView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Camera RAW Inspector")
+                        Text(L10n.tr("app.title"))
                             .font(.title2.weight(.bold))
-                        Text("A local utility for camera RAW metadata checks, Fujifilm RAF Image Count inspection, batch reports, and seller/buyer verification documents.")
+                        Text(L10n.tr("about.subtitle"))
                             .foregroundStyle(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
                     .cardStyle()
 
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Privacy")
+                        Text(L10n.tr("about.privacy"))
                             .font(.headline)
-                        Text("Files are processed locally on this iPhone or iPad. The app does not upload images, does not use analytics, does not use advertising, and does not collect personal data.")
+                        Text(L10n.tr("about.privacy_text"))
                             .foregroundStyle(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
                     .cardStyle()
 
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Current support")
+                        Text(L10n.tr("about.current_support"))
                             .font(.headline)
-                        Text("Fujifilm RAF shutter count is the primary supported function. Nikon shutter count is best-effort when MakerNote tag 0x00A7 is readable. Canon and Sony metadata is supported, but shutter count may be unavailable because many files do not expose it reliably.")
+                        Text(L10n.tr("about.support_text"))
                             .foregroundStyle(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
                     .cardStyle()
 
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Legal")
+                        Text(L10n.tr("about.legal"))
                             .font(.headline)
-                        Text("© 2026 Soroosh AGHAEI. All rights reserved.")
-                        Text("This app is an independent utility and is not affiliated with, endorsed by, or sponsored by Fujifilm, Canon, Nikon, Sony, or any camera manufacturer.")
+                        Text(L10n.tr("legal.copyright"))
+                        Text(L10n.tr("about.legal_text"))
                             .foregroundStyle(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
                     }
@@ -659,7 +673,7 @@ struct AboutView: View {
                 .padding()
                 .frame(maxWidth: .infinity)
             }
-            .navigationTitle("About")
+            .navigationTitle(L10n.tr("about.title"))
             .navigationBarTitleDisplayMode(.inline)
         }
     }
@@ -721,7 +735,7 @@ enum PhotoImportError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .unreadablePhoto:
-            return "The selected Photos item could not be read. Try importing the original RAW file through Files."
+            return L10n.tr("error.photo_unreadable")
         }
     }
 }
@@ -782,9 +796,9 @@ enum ReportExportError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .noResults:
-            return "There are no inspection results to export."
+            return L10n.tr("error.no_results")
         case .pngCreationFailed:
-            return "The PNG report could not be created."
+            return L10n.tr("error.png_failed")
         }
     }
 }
@@ -792,7 +806,7 @@ enum ReportExportError: LocalizedError {
 enum ReportExporter {
     static func exportPDF(results: [CameraInspectionResult]) throws -> URL {
         guard !results.isEmpty else { throw ReportExportError.noResults }
-        let url = FileManager.default.temporaryDirectory.appendingPathComponent("Camera_RAW_Inspection_Report_\(timestamp()).pdf")
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("RAW_Inspector_Report_\(timestamp()).pdf")
         let pageBounds = CGRect(x: 0, y: 0, width: 595, height: 842)
         let renderer = UIGraphicsPDFRenderer(bounds: pageBounds, format: pdfFormat())
 
@@ -803,9 +817,9 @@ enum ReportExporter {
             let margin: CGFloat = 36
             let width = pageBounds.width - margin * 2
 
-            draw("Camera RAW Inspection Report", at: &y, margin: margin, width: width, font: .boldSystemFont(ofSize: 22))
-            draw("© 2026 Soroosh AGHAEI. All rights reserved.", at: &y, margin: margin, width: width, font: .systemFont(ofSize: 11))
-            draw("Processed locally. No upload, no analytics, no advertising.", at: &y, margin: margin, width: width, font: .systemFont(ofSize: 11))
+            draw(L10n.tr("report.title"), at: &y, margin: margin, width: width, font: .boldSystemFont(ofSize: 22))
+            draw(L10n.tr("legal.copyright"), at: &y, margin: margin, width: width, font: .systemFont(ofSize: 11))
+            draw(L10n.tr("privacy.local_short"), at: &y, margin: margin, width: width, font: .systemFont(ofSize: 11))
             y += 14
 
             for (index, result) in results.enumerated() {
@@ -814,7 +828,7 @@ enum ReportExporter {
                     fillPDFBackground(context, pageBounds: pageBounds)
                     y = 36
                 }
-                draw("File \(index + 1): \(result.fileName)", at: &y, margin: margin, width: width, font: .boldSystemFont(ofSize: 15))
+                draw(L10n.tr("report.file_number", index + 1, result.fileName), at: &y, margin: margin, width: width, font: .boldSystemFont(ofSize: 15))
                 for line in result.reportText.components(separatedBy: "\n").dropFirst(2) {
                     if y > pageBounds.height - 54 {
                         context.beginPage()
@@ -832,7 +846,7 @@ enum ReportExporter {
     static func exportPNG(results: [CameraInspectionResult]) throws -> URL {
         guard !results.isEmpty else { throw ReportExportError.noResults }
         let report = fullReportText(results: results)
-        let url = FileManager.default.temporaryDirectory.appendingPathComponent("Camera_RAW_Inspection_Report_\(timestamp()).png")
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("RAW_Inspector_Report_\(timestamp()).png")
         let width: CGFloat = 1240
         let estimatedHeight = CGFloat(max(1754, report.components(separatedBy: "\n").count * 42 + 220))
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: width, height: estimatedHeight))
@@ -851,7 +865,7 @@ enum ReportExporter {
                 .foregroundColor: UIColor.black,
                 .paragraphStyle: paragraph
             ]
-            ("Camera RAW Inspection Report" as NSString).draw(in: CGRect(x: 64, y: 54, width: width - 128, height: 60), withAttributes: titleAttributes)
+            (L10n.tr("report.title") as NSString).draw(in: CGRect(x: 64, y: 54, width: width - 128, height: 60), withAttributes: titleAttributes)
             (report as NSString).draw(in: CGRect(x: 64, y: 130, width: width - 128, height: estimatedHeight - 180), withAttributes: attributes)
         }
         guard let data = image.pngData() else { throw ReportExportError.pngCreationFailed }
@@ -861,8 +875,8 @@ enum ReportExporter {
 
     private static func fullReportText(results: [CameraInspectionResult]) -> String {
         var blocks: [String] = []
-        blocks.append("© 2026 Soroosh AGHAEI. All rights reserved.")
-        blocks.append("Processed locally. No upload, no analytics, no advertising.")
+        blocks.append(L10n.tr("legal.copyright"))
+        blocks.append(L10n.tr("privacy.local_short"))
         blocks.append("")
         for result in results {
             blocks.append(result.reportText)
@@ -898,7 +912,7 @@ enum ReportExporter {
     private static func pdfFormat() -> UIGraphicsPDFRendererFormat {
         let format = UIGraphicsPDFRendererFormat()
         format.documentInfo = [
-            kCGPDFContextTitle as String: "Camera RAW Inspection Report",
+            kCGPDFContextTitle as String: L10n.tr("report.title"),
             kCGPDFContextAuthor as String: "Soroosh AGHAEI"
         ]
         return format

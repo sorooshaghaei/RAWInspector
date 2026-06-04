@@ -1,35 +1,18 @@
 # Privacy Policy
 
-Effective date: 2026
+RAW Inspector processes camera RAW files locally on your device.
 
-RAW Inspector is designed to process camera RAW files locally on the user's device.
+The app does not:
 
-## Data collection
+- upload images or RAW files
+- collect personal data
+- use analytics
+- use advertising SDKs
+- use tracking SDKs
+- require an account
 
-The app does not collect personal data.
+Selected files are opened only for metadata inspection. PDF and PNG reports are created locally. You choose whether to save or share them.
 
-## Image and RAW file processing
-
-Selected RAW files are opened locally for metadata inspection. The app does not upload images or RAW files to a server.
-
-## Analytics and advertising
-
-The app does not use analytics SDKs, advertising SDKs, tracking SDKs, or third-party user profiling.
-
-## Network use
-
-The app does not require network access for metadata inspection.
-
-## Reports
-
-PDF and PNG reports are generated locally on the device. The user controls whether to save or share those reports.
-
-## Contact
-
-For support, use the support contact information provided on the App Store listing.
-
-## Legal
+RAW Inspector is an independent utility and is not affiliated with, endorsed by, or sponsored by Fujifilm, Canon, Nikon, Sony, or any camera manufacturer.
 
 © 2026 Soroosh AGHAEI. All rights reserved.
-
-This app is an independent utility and is not affiliated with, endorsed by, or sponsored by Fujifilm, Canon, Nikon, Sony, or any camera manufacturer.

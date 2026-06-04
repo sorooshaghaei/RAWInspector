@@ -42,7 +42,7 @@
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Select camera RAW files or image assets from Photos for local metadata inspection. Files are processed on device and are not uploaded.</string>
+	<string>Select photos or RAW files for local metadata inspection. Files stay on this device.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIFileSharingEnabled</key>

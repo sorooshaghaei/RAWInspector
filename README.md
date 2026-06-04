@@ -1,98 +1,52 @@
-# Camera RAW Inspector / RAW Inspector
+# RAW Inspector
 
-App Store-oriented SwiftUI iPhone/iPad project for camera RAW metadata inspection, Fujifilm RAF Image Count reading, batch inspection, and seller/buyer report export.
+RAW Inspector is a small SwiftUI app for checking camera RAW metadata on iPhone, iPad, and Mac.
 
-Copyright © 2026 Soroosh AGHAEI. All rights reserved.
+It can read useful camera information from RAW files and, when available, show shutter/image count data. Fujifilm RAF files are the main supported path for shutter count.
 
-## Current version
+## Features
 
-Version: 2.3.0  
-Build: 5
+- Open RAW files from Files
+- Open images from Photos when available
+- Inspect multiple files at once
+- Show camera model, brand, lens, firmware/software, serial number, capture date, file size, and metadata status
+- Read Fujifilm RAF Image Count when available
+- Try Nikon shutter count when readable MakerNote data is present
+- Show metadata reports for Canon, Sony, and other RAW files
+- Export a PDF or PNG report
+- Local processing only
 
-## Main features
+## Supported files
 
-- Choose from Photos for convenience.
-- Choose one or more original RAW files from the iOS Files app for the most reliable shutter-count reading.
-- Batch inspect multiple files.
-- Read camera model, brand, firmware/software, serial number when stored, lens model when stored, capture date, file size, file verification, and metadata status.
-- Read Fujifilm `.RAF` Image Count from MakerNote tag `0x1438`.
-- Best-effort Nikon `.NEF` / `.NRW` shutter count reading when MakerNote tag `0x00A7` is available and readable.
-- Canon `.CR2` / `.CR3` and Sony `.ARW` metadata inspection, with clear warnings when shutter count is not available from normal RAW metadata.
-- Warn when metadata is missing, MakerNote is stripped, file extension is unsupported, the file looks too small for RAW, or the software field suggests editing/export.
-- Export a seller/buyer report as PDF.
-- Export a seller/buyer report as PNG.
-- Local-only processing: no upload, no analytics, no ads, no account system.
-- Responsive SwiftUI layout designed for different iPhone, iPad, and Mac Catalyst window sizes.
-- Mac Catalyst enabled for running on macOS from the same project.
+- Fujifilm RAF
+- Nikon NEF / NRW
+- Canon CR2 / CR3
+- Sony ARW
+- Other RAW files when iOS/macOS can read their metadata
 
-## Version roadmap implemented in this package
+## Important notes
 
-### 1.0
+Shutter count is not stored the same way by every camera brand.
 
-Fujifilm RAF shutter count, clean UI, local-only privacy, and clear disclaimers.
+Fujifilm RAF files usually give the best result because the app reads the Image Count value from MakerNote data. Nikon support depends on the file and camera model. Canon and Sony files often do not expose shutter count in normal RAW metadata, so the app may show metadata without a count.
 
-### 1.1
+For the best result, use original RAW files copied directly from the camera card. Avoid screen captures, social media files, compressed previews, and edited exports.
 
-Camera metadata fields: model, serial number when available, firmware/software, lens used, date, file type verification, missing metadata warning, edited/exported file warning.
+## Privacy
 
-### 1.2
+RAW Inspector works locally. Files are processed on the device. The app does not upload images, use analytics, show ads, or collect personal data.
 
-Batch inspection for multiple RAW files.
+## Build
 
-### 2.0
+Open `RAFShutterCount.xcodeproj` in Xcode and run the app on iPhone, iPad, Simulator, or Mac Catalyst.
 
-Added Canon/Nikon/Sony support where metadata allows it. Fujifilm remains the strongest supported shutter-count path. Nikon shutter count is best-effort. Canon and Sony shutter counts often remain unavailable because many files do not expose a reliable count in ordinary RAW metadata.
+Minimum targets:
 
-### 2.1
+- iOS / iPadOS 16+
+- macOS 13+ through Mac Catalyst
 
-PDF and PNG seller/buyer report export.
+## Legal
 
-### 2.2
+RAW Inspector is an independent utility. It is not affiliated with, endorsed by, or sponsored by Fujifilm, Canon, Nikon, Sony, or any camera manufacturer.
 
-Photos import added. Files import kept for original RAW reliability. Blank PDF export fixed by forcing white report pages with black text.
-
-### 2.3
-
-Mac Catalyst support enabled. The same project can run on iPhone, iPad, iOS Simulator, and Mac Catalyst destinations in Xcode. Compatibility documentation updated for Apple arm64 devices.
-
-## Compatibility
-
-This project targets iPhone and iPad with iOS/iPadOS 16.0 or later, and Mac through Mac Catalyst with macOS 13.0 or later. It supports Apple arm64 iPhone/iPad devices that can run iOS/iPadOS 16+, and Apple Silicon Macs through the Mac Catalyst build. It does not support Apple Watch, Apple TV, Android, Linux, Windows, or older iPhones/iPads that cannot install iOS 16.
-
-## Project status
-
-This is not a signed IPA. To publish or install it on a physical iPhone, open the Xcode project and sign it with your own Apple Developer account.
-
-1. Open `RAFShutterCount.xcodeproj` in Xcode.
-2. Select the app target.
-3. In **Signing & Capabilities**, select your Apple Developer team.
-4. Confirm or change the bundle identifier: `com.sorooshaghaei.rafshuttercount`.
-5. Build and test on real iPhone/iPad devices and on **My Mac (Mac Catalyst)**.
-6. Test with multiple original `.RAF`, `.NEF`, `.CR2`, `.CR3`, and `.ARW` files.
-7. Test both **Choose from Photos** and **Choose from Files**.
-8. Export PDF and PNG reports in Light Mode and Dark Mode.
-9. Archive the app in Xcode.
-10. Upload the archive to App Store Connect.
-11. Add screenshots, app metadata, support URL, and privacy policy URL.
-12. Submit for App Review.
-
-## Important limitations
-
-Shutter count is not standardized across camera manufacturers.
-
-- Fujifilm RAF: supported through MakerNote Image Count tag `0x1438`.
-- Nikon NEF/NRW: best-effort support where MakerNote tag `0x00A7` is present and readable.
-- Canon CR2/CR3: metadata report supported; shutter count often unavailable from ordinary RAW metadata.
-- Sony ARW/SR2/SRF: metadata report supported; shutter count often unavailable from ordinary RAW metadata.
-
-The app should not claim forensic certainty. Firmware updates, service events, stripped metadata, exported files, or model-specific storage differences can affect the stored values.
-
-## Recommended App Store privacy answer
-
-For this version, the expected App Privacy answer is normally:
-
-**Data Not Collected**
-
-Reason: all processing is local, no network upload is used, no analytics SDK is included, no advertising SDK is included, and no user account system exists.
-
-You must verify this before submission. If you later add analytics, crash reporting, ads, cloud upload, server-side processing, or user accounts, the privacy answer must change.
+© 2026 Soroosh AGHAEI. All rights reserved.
