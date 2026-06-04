@@ -1,15 +1,25 @@
+# macOS
 .DS_Store
-DerivedData/
-build/
+
+# Xcode user settings
 *.xcuserstate
-*.xcworkspace/xcuserdata/
-*.xcodeproj/xcuserdata/
-*.moved-aside
-*.ipa
-*.dSYM.zip
-*.dSYM
-*.mobileprovision
-*.cer
-*.p12
-*.RAF
-*.raf
+*.xcuserdatad/
+xcuserdata/
+
+# Xcode build output
+build/
+DerivedData/
+
+# Swift Package Manager
+.swiftpm/
+.build/
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Archives
+*.xcarchive
+
+# Logs
+*.log
