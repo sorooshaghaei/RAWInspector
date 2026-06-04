@@ -24,4 +24,3 @@ Current support:
 - Canon CR2 / CR3: metadata inspection; shutter count may be unavailable
 - Sony ARW: metadata inspection; shutter count may be unavailable
 
-© 2026 Soroosh AGHAEI. All rights reserved.

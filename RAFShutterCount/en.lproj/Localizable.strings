@@ -61,8 +61,8 @@
 "hint.choose_files" = "Choose one or more original RAW files from Files. This is the most reliable method.";
 "hint.choose_photos" = "Choose images or RAW files from Photos. If Photos gives only a preview, use Files for the original RAW file.";
 "hint.photos_files" = "Photos is quick. Files is better for original RAW files.";
-"legal.copyright" = "© 2026 Soroosh AGHAEI. All rights reserved.";
-"legal.report" = "Legal: © 2026 Soroosh AGHAEI. All rights reserved. Independent utility; not affiliated with camera manufacturers.";
+"legal.copyright" = "© 2026 Mehdi Aghaei. All rights reserved.";
+"legal.report" = "Legal: © 2026 Mehdi Aghaei. All rights reserved. Independent utility; not affiliated with camera manufacturers.";
 "limits.brand_specific" = "Shutter count depends on the camera brand. Fujifilm RAF Image Count is read from MakerNote tag 0x1438. Nikon support is best-effort when MakerNote tag 0x00A7 is present. Canon and Sony files often do not expose a reliable count in normal RAW metadata.";
 "limits.not_proof" = "Use this as a helpful check, not as absolute proof. Firmware changes, service work, and stripped metadata can affect stored values.";
 "limits.title" = "Important limits";

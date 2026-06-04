@@ -61,8 +61,8 @@
 "hint.choose_files" = "Choisissez un ou plusieurs RAW originaux depuis Fichiers. C’est la méthode la plus fiable.";
 "hint.choose_photos" = "Choisissez des images ou des RAW depuis Photos. Si Photos donne seulement un aperçu, utilisez Fichiers pour le RAW original.";
 "hint.photos_files" = "Photos est rapide. Fichiers est mieux pour les RAW originaux.";
-"legal.copyright" = "© 2026 Soroosh AGHAEI. All rights reserved.";
-"legal.report" = "Legal: © 2026 Soroosh AGHAEI. All rights reserved. Independent utility; not affiliated with camera manufacturers.";
+"legal.copyright" = "© 2026 Mehdi Aghaei. All rights reserved.";
+"legal.report" = "Legal: © 2026 Mehdi Aghaei. All rights reserved. Independent utility; not affiliated with camera manufacturers.";
 "limits.brand_specific" = "Le compteur dépend de la marque. Fujifilm RAF Image Count est lu depuis le MakerNote 0x1438. Nikon est pris en charge au mieux quand 0x00A7 est présent. Canon et Sony n’exposent souvent pas de compteur fiable dans les métadonnées RAW normales.";
 "limits.not_proof" = "Utilisez ce résultat comme une aide, pas comme une preuve absolue. Firmware, réparation et métadonnées supprimées peuvent modifier les valeurs.";
 "limits.title" = "Limites importantes";

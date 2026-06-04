@@ -15,4 +15,3 @@ Selected files are opened only for metadata inspection. PDF and PNG reports are 
 
 RAW Inspector is an independent utility and is not affiliated with, endorsed by, or sponsored by Fujifilm, Canon, Nikon, Sony, or any camera manufacturer.
 
-© 2026 Soroosh AGHAEI. All rights reserved.

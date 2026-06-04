@@ -913,7 +913,7 @@ enum ReportExporter {
         let format = UIGraphicsPDFRendererFormat()
         format.documentInfo = [
             kCGPDFContextTitle as String: L10n.tr("report.title"),
-            kCGPDFContextAuthor as String: "Soroosh AGHAEI"
+            kCGPDFContextAuthor as String: "Mehdi Aghaei"
         ]
         return format
     }
