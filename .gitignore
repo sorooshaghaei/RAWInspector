@@ -1,7 +1,7 @@
 # macOS
 .DS_Store
 
-# Xcode user settings
+# Xcode user/private files
 *.xcuserstate
 *.xcuserdatad/
 xcuserdata/
@@ -10,13 +10,9 @@ xcuserdata/
 build/
 DerivedData/
 
-# Swift Package Manager
+# SwiftPM/build cache
 .swiftpm/
 .build/
-
-# Playgrounds
-timeline.xctimeline
-playground.xcworkspace
 
 # Archives
 *.xcarchive
