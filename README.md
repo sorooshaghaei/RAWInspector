@@ -61,6 +61,18 @@ Minimum targets:
 - iOS / iPadOS 16+
 - macOS 13+ through Mac Catalyst
 
+
+## Support
+
+RAWInspector is free and open source.
+
+If this project helps you, you can support development here:
+
+[Sponsor me on GitHub](https://github.com/sponsors/sorooshaghaei)
+
+Sponsorship helps me cover Apple Developer Program fees, testing devices, app maintenance, and future improvements.
+
+
 ## Legal
 
 RAW Inspector is an independent utility. It is not affiliated with, endorsed by, or sponsored by Fujifilm, Canon, Nikon, Sony, or any camera manufacturer.
